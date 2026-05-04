@@ -53,6 +53,9 @@ def load_knowledge_base():
         return json.load(file)
 
 
+_KNOWLEDGE_BASE = load_knowledge_base()
+
+
 def normalize_text(value):
     value = value.lower()
     value = re.sub(r"[^\w\s]", " ", value)
@@ -99,10 +102,9 @@ def get_match_score(text, keyword):
 
 def get_response(user_text):
     text = normalize_text(user_text)
-    knowledge_base = load_knowledge_base()
     best_match = None
 
-    for item in knowledge_base:
+    for item in _KNOWLEDGE_BASE:
         keywords = item.get("keywords", []).copy()
         if item.get("question"):
             keywords.append(item["question"])
